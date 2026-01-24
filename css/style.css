@@ -656,6 +656,117 @@ nav {
   text-align: center;
 }
 
+/* Image List (for JPG to PDF) */
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: var(--spacing-4);
+}
+
+.image-item {
+  position: relative;
+  background-color: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.image-item:hover {
+  border-color: var(--primary-red);
+}
+
+.image-item.dragging {
+  opacity: 0.5;
+  border-color: var(--primary-red);
+}
+
+.image-item img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  background-color: var(--white);
+}
+
+.image-item-info {
+  padding: var(--spacing-2);
+  font-size: var(--font-size-xs);
+  color: var(--gray-600);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.image-item .image-size {
+  color: var(--gray-400);
+}
+
+.image-item .remove-image {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: var(--error);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.image-item:hover .remove-image {
+  opacity: 1;
+}
+
+.image-item .drag-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.image-item:hover .drag-handle {
+  opacity: 1;
+}
+
+/* Drag handle for file list */
+.file-info .drag-handle {
+  cursor: grab;
+}
+
+.file-info .drag-handle:active {
+  cursor: grabbing;
+}
+
+@media (min-width: 768px) {
+  .image-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .image-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* Results Grid */
 .results-grid {
   display: grid;

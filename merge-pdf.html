@@ -5,21 +5,22 @@
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว ออนไลน์ ฟรี ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
-    <meta name="keywords" content="merge pdf, รวม pdf, รวมไฟล์ pdf, combine pdf">
+    <meta name="description"
+        content="รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว ออนไลน์ ฟรี รวดเร็ว ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
+    <meta name="keywords" content="merge pdf, รวม pdf, รวมไฟล์ pdf, combine pdf, pdf merger">
     <meta name="author" content="i-am pdf">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="รวม PDF ออนไลน์ | i-am pdf (Coming Soon)">
-    <meta property="og:description" content="รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว ออนไลน์ ฟรี">
+    <meta property="og:title" content="รวม PDF ออนไลน์ | รวมไฟล์ PDF หลายไฟล์ ฟรี | i-am pdf">
+    <meta property="og:description" content="รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว ออนไลน์ ฟรี รวดเร็ว">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://i-am-pdf.com/merge-pdf.html">
     <meta property="og:locale" content="th_TH">
     <meta property="og:site_name" content="i-am pdf">
 
     <!-- Title -->
-    <title>รวม PDF ออนไลน์ | i-am pdf (Coming Soon)</title>
+    <title>รวม PDF ออนไลน์ | รวมไฟล์ PDF หลายไฟล์ ฟรี | i-am pdf</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +32,24 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://i-am-pdf.com/merge-pdf.html">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Merge PDF - i-am pdf",
+    "url": "https://i-am-pdf.com/merge-pdf.html",
+    "description": "รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว ออนไลน์ ฟรี",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -70,65 +89,116 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Coming Soon Hero -->
-        <section class="coming-soon-hero">
+        <!-- Tool Section -->
+        <section class="hero">
             <div class="container">
-                <div class="hero-content animate-fade-in">
-                    <span class="coming-soon-badge">🚀 Coming Soon</span>
+                <div class="hero-content">
                     <h1>รวม PDF ออนไลน์</h1>
-                    <p>เร็วๆ นี้! เครื่องมือรวมไฟล์ PDF หลายไฟล์เข้าเป็นไฟล์เดียว จัดเรียงลำดับได้ตามต้องการ ฟรี</p>
-                    <a href="pdf-to-jpg.html" class="btn btn-primary btn-lg">
-                        ลองใช้ PDF to JPG ก่อน
-                    </a>
+                    <p>รวมไฟล์ PDF หลายไฟล์เข้าด้วยกันเป็นไฟล์เดียว ฟรี - ลากเพื่อจัดเรียงลำดับ</p>
                 </div>
-            </div>
-        </section>
 
-        <!-- Feature Preview -->
-        <section class="section-alt">
-            <div class="container">
-                <h2 class="text-center">ฟีเจอร์ที่จะมาเร็วๆ นี้</h2>
+                <!-- Upload Area -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2" />
+                            <rect x="8" y="2" width="12" height="12" rx="2" ry="2" />
+                        </svg>
+                    </div>
+                    <h3>ลากไฟล์ PDF มาวางที่นี่</h3>
+                    <p>หรือคลิกเพื่อเลือกไฟล์ (เลือกได้หลายไฟล์)</p>
+                    <input type="file" id="file-input" accept=".pdf,application/pdf" multiple
+                        aria-label="อัปโหลดไฟล์ PDF">
+                </div>
 
-                <div class="features-grid" style="max-width: 900px; margin: 0 auto;">
-                    <article class="feature-card">
-                        <div class="feature-icon">
+                <!-- Converter Section -->
+                <div class="converter-section hidden" id="converter-section">
+                    <!-- File List -->
+                    <div id="file-list" class="file-list sortable"></div>
+
+                    <!-- Add More Files -->
+                    <button class="btn btn-secondary" id="add-more-files" style="width: 100%; margin-bottom: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        เพิ่มไฟล์ PDF
+                    </button>
+                    <input type="file" id="add-file-input" accept=".pdf,application/pdf" multiple
+                        style="display: none;">
+
+                    <div class="progress-container hidden" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">กำลังรวมไฟล์ PDF... 0%</p>
+                    </div>
+
+                    <div id="action-buttons">
+                        <button class="btn btn-primary btn-lg" id="merge-btn" style="width: 100%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2" />
                                 <rect x="8" y="2" width="12" height="12" rx="2" ry="2" />
                             </svg>
-                        </div>
-                        <h3>รวมไม่จำกัดจำนวน</h3>
-                        <p>อัปโหลดและรวมไฟล์ PDF ได้หลายไฟล์พร้อมกัน</p>
-                    </article>
+                            รวมไฟล์ PDF
+                        </button>
+                    </div>
 
-                    <article class="feature-card">
-                        <div class="feature-icon">
+                    <div class="hidden" id="download-section" style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary btn-lg" id="download-btn" style="width: 100%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <line x1="21" y1="10" x2="3" y2="10" />
-                                <line x1="21" y1="6" x2="3" y2="6" />
-                                <line x1="21" y1="14" x2="3" y2="14" />
-                                <line x1="21" y1="18" x2="3" y2="18" />
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                        </div>
-                        <h3>จัดเรียงลำดับได้</h3>
-                        <p>ลากวางเพื่อจัดเรียงลำดับไฟล์ก่อนรวม</p>
+                            ดาวน์โหลด PDF ที่รวมแล้ว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trust Signals -->
+                <div class="trust-signals" style="margin-top: 2rem;">
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <span>ประมวลผลบนเบราว์เซอร์ ไม่อัปโหลดไปเซิร์ฟเวอร์</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Section -->
+        <section class="section-alt">
+            <div class="container">
+                <h2 class="text-center">รวมไฟล์ PDF ได้อย่างไร</h2>
+                <p class="text-center">เพียง 3 ขั้นตอนง่ายๆ</p>
+
+                <div class="features-grid" style="max-width: 900px; margin: 0 auto;">
+                    <article class="feature-card">
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">1</div>
+                        <h3>เลือกไฟล์ PDF</h3>
+                        <p>เลือกไฟล์ PDF หลายไฟล์ที่ต้องการรวม หรือลากมาวางในกล่อง</p>
                     </article>
 
                     <article class="feature-card">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                            </svg>
-                        </div>
-                        <h3>รักษาคุณภาพ</h3>
-                        <p>รวมไฟล์โดยไม่ลดคุณภาพของเอกสาร</p>
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">2</div>
+                        <h3>จัดเรียงลำดับ</h3>
+                        <p>ลากเพื่อจัดเรียงลำดับไฟล์ตามที่ต้องการ</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">3</div>
+                        <h3>ดาวน์โหลด</h3>
+                        <p>กดปุ่มรวมไฟล์ รอสักครู่แล้วดาวน์โหลดได้ทันที</p>
                     </article>
                 </div>
             </div>
@@ -140,17 +210,18 @@
                 <article>
                     <h2>เกี่ยวกับเครื่องมือรวม PDF</h2>
                     <p>
-                        เครื่องมือ <strong>รวม PDF ออนไลน์</strong> ของ i-am pdf กำลังอยู่ในระหว่างการพัฒนา เร็วๆ
-                        นี้คุณจะสามารถ<strong>รวมไฟล์ PDF หลายไฟล์</strong>เข้าด้วยกันเป็นไฟล์เดียวได้อย่างง่ายดาย
-                        เหมาะสำหรับการรวบรวมเอกสาร รายงาน หรือใบเสร็จหลายใบไว้ในที่เดียว
+                        เครื่องมือ <strong>รวม PDF ออนไลน์</strong> ของ i-am pdf ช่วยให้คุณสามารถ<strong>รวมไฟล์ PDF
+                            หลายไฟล์</strong>เข้าด้วยกันเป็นไฟล์เดียวได้อย่างง่ายดาย เหมาะสำหรับการรวบรวมเอกสาร รายงาน
+                        หรือใบเสร็จหลายใบไว้ในที่เดียว
                     </p>
                     <p>
                         การ <strong>Merge PDF</strong> หรือรวมไฟล์ PDF มีประโยชน์มากมาย ไม่ว่าจะเป็นการรวมใบเสร็จรับเงิน
-                        รวมเอกสารสัญญา หรือรวบรวมรายงานหลายส่วนเป็นไฟล์เดียว ทำให้จัดการและส่งต่อได้สะดวกยิ่งขึ้น
+                        รวมเอกสารสัญญา รวบรวมรายงานหลายส่วนเป็นไฟล์เดียว หรือสร้างพอร์ตโฟลิโอ
+                        ทำให้จัดการและส่งต่อได้สะดวกยิ่งขึ้น
                     </p>
                     <p>
-                        ระหว่างรอ คุณสามารถลองใช้เครื่องมือ <a href="pdf-to-jpg.html">PDF to JPG</a> ของเราได้ก่อน
-                        ซึ่งพร้อมใช้งานแล้ววันนี้!
+                        สิ่งที่ทำให้เครื่องมือของเราโดดเด่นคือความปลอดภัย ไฟล์ของคุณจะถูกประมวลผลบนเบราว์เซอร์โดยตรง
+                        ไม่มีการอัปโหลดไปยังเซิร์ฟเวอร์ภายนอก ทำให้มั่นใจได้ว่าข้อมูลสำคัญจะไม่รั่วไหล
                     </p>
                 </article>
             </div>
@@ -193,8 +264,12 @@
         </div>
     </footer>
 
+    <!-- PDF-lib Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
     <!-- Scripts -->
     <script src="js/app.js"></script>
+    <script src="js/merge-pdf.js"></script>
 </body>
 
 </html>

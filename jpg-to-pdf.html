@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="แปลงรูปภาพ JPG เป็นไฟล์ PDF ออนไลน์ ฟรี รวดเร็ว ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
-    <meta name="keywords" content="jpg to pdf, แปลง jpg เป็น pdf, image to pdf, รูปภาพเป็น pdf">
+        content="แปลงรูปภาพ JPG, PNG, WEBP เป็นไฟล์ PDF ออนไลน์ ฟรี รวดเร็ว ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
+    <meta name="keywords" content="jpg to pdf, แปลง jpg เป็น pdf, image to pdf, รูปภาพเป็น pdf, png to pdf">
     <meta name="author" content="i-am pdf">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="JPG to PDF ออนไลน์ | i-am pdf (Coming Soon)">
-    <meta property="og:description" content="แปลงรูปภาพ JPG เป็นไฟล์ PDF ออนไลน์ ฟรี รวดเร็ว">
+    <meta property="og:title" content="JPG to PDF ออนไลน์ | แปลงรูปภาพเป็น PDF ฟรี | i-am pdf">
+    <meta property="og:description" content="แปลงรูปภาพ JPG, PNG, WEBP เป็นไฟล์ PDF ออนไลน์ ฟรี รวดเร็ว">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://i-am-pdf.com/jpg-to-pdf.html">
     <meta property="og:locale" content="th_TH">
     <meta property="og:site_name" content="i-am pdf">
 
     <!-- Title -->
-    <title>JPG to PDF ออนไลน์ | i-am pdf (Coming Soon)</title>
+    <title>JPG to PDF ออนไลน์ | แปลงรูปภาพเป็น PDF ฟรี | i-am pdf</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,24 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://i-am-pdf.com/jpg-to-pdf.html">
+
+    <!-- Schema.org - WebApplication -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JPG to PDF - i-am pdf",
+    "url": "https://i-am-pdf.com/jpg-to-pdf.html",
+    "description": "แปลงรูปภาพ JPG, PNG, WEBP เป็นไฟล์ PDF ออนไลน์ ฟรี",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -71,63 +89,139 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Coming Soon Hero -->
-        <section class="coming-soon-hero">
+        <!-- Tool Section -->
+        <section class="hero">
             <div class="container">
-                <div class="hero-content animate-fade-in">
-                    <span class="coming-soon-badge">🚀 Coming Soon</span>
+                <div class="hero-content">
                     <h1>JPG to PDF ออนไลน์</h1>
-                    <p>เร็วๆ นี้! เครื่องมือแปลงรูปภาพ JPG, PNG, และรูปภาพอื่นๆ เป็นไฟล์ PDF ออนไลน์ ฟรี ใช้งานง่าย</p>
-                    <a href="pdf-to-jpg.html" class="btn btn-primary btn-lg">
-                        ลองใช้ PDF to JPG ก่อน
-                    </a>
+                    <p>แปลงรูปภาพ JPG, PNG, WEBP เป็นไฟล์ PDF คุณภาพสูง ฟรี - รองรับหลายรูปพร้อมกัน</p>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                    </div>
+                    <h3>ลากรูปภาพมาวางที่นี่</h3>
+                    <p>หรือคลิกเพื่อเลือกไฟล์ (รองรับ JPG, PNG, WEBP, GIF)</p>
+                    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple
+                        aria-label="อัปโหลดรูปภาพ">
+                </div>
+
+                <!-- Converter Section (Hidden by default) -->
+                <div class="converter-section hidden" id="converter-section">
+                    <!-- Image Preview List -->
+                    <div id="image-list" class="image-list"></div>
+
+                    <!-- Add More Files Button -->
+                    <button class="btn btn-secondary" id="add-more-files" style="width: 100%; margin-bottom: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        เพิ่มรูปภาพ
+                    </button>
+                    <input type="file" id="add-file-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple
+                        style="display: none;" aria-label="เพิ่มรูปภาพ">
+
+                    <!-- Options -->
+                    <div class="options-section" style="margin-bottom: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span>ขนาดหน้า:</span>
+                            <select id="page-size"
+                                style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                                <option value="a4">A4</option>
+                                <option value="letter">Letter</option>
+                                <option value="fit">พอดีกับรูปภาพ</option>
+                            </select>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span>แนว:</span>
+                            <select id="orientation"
+                                style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                                <option value="portrait">แนวตั้ง</option>
+                                <option value="landscape">แนวนอน</option>
+                                <option value="auto">อัตโนมัติ (ตามรูป)</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="progress-container hidden" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">กำลังสร้างไฟล์ PDF... 0%</p>
+                    </div>
+
+                    <div id="action-buttons">
+                        <button class="btn btn-primary btn-lg" id="convert-btn" style="width: 100%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg>
+                            สร้างไฟล์ PDF
+                        </button>
+                    </div>
+
+                    <div class="hidden" id="download-section" style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary btn-lg" id="download-btn" style="width: 100%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            ดาวน์โหลด PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trust Signals -->
+                <div class="trust-signals" style="margin-top: 2rem;">
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <span>ประมวลผลบนเบราว์เซอร์ ไม่อัปโหลดไปเซิร์ฟเวอร์</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Feature Preview -->
+        <!-- How to Section -->
         <section class="section-alt">
             <div class="container">
-                <h2 class="text-center">ฟีเจอร์ที่จะมาเร็วๆ นี้</h2>
+                <h2 class="text-center">แปลงรูปภาพเป็น PDF ได้อย่างไร</h2>
+                <p class="text-center">เพียง 3 ขั้นตอนง่ายๆ</p>
 
                 <div class="features-grid" style="max-width: 900px; margin: 0 auto;">
                     <article class="feature-card">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                <polyline points="21 15 16 10 5 21" />
-                            </svg>
-                        </div>
-                        <h3>รองรับหลายรูปแบบ</h3>
-                        <p>แปลงได้ทั้ง JPG, JPEG, PNG, GIF, BMP, WEBP และอื่นๆ</p>
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">1</div>
+                        <h3>เลือกรูปภาพ</h3>
+                        <p>ลากรูปภาพมาวางหรือคลิกเพื่อเลือก รองรับ JPG, PNG, WEBP, GIF</p>
                     </article>
 
                     <article class="feature-card">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                            </svg>
-                        </div>
-                        <h3>ปรับขนาดหน้าได้</h3>
-                        <p>เลือกขนาด A4, Letter, หรือกำหนดเอง</p>
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">2</div>
+                        <h3>จัดเรียงลำดับ</h3>
+                        <p>ลากเพื่อจัดเรียงลำดับรูปภาพ เลือกขนาดหน้าและแนวที่ต้องการ</p>
                     </article>
 
                     <article class="feature-card">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-                            </svg>
-                        </div>
-                        <h3>รวมหลายรูปใน PDF เดียว</h3>
-                        <p>จัดเรียงลำดับรูปภาพก่อนรวมเป็น PDF</p>
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">3</div>
+                        <h3>ดาวน์โหลด PDF</h3>
+                        <p>กดสร้างไฟล์ PDF รอสักครู่แล้วดาวน์โหลดได้ทันที</p>
                     </article>
                 </div>
             </div>
@@ -139,18 +233,18 @@
                 <article>
                     <h2>เกี่ยวกับเครื่องมือ JPG to PDF</h2>
                     <p>
-                        เครื่องมือ <strong>JPG to PDF ออนไลน์</strong> ของ i-am pdf กำลังอยู่ในระหว่างการพัฒนา เร็วๆ
-                        นี้คุณจะสามารถ<strong>แปลงรูปภาพเป็น PDF</strong> ได้อย่างง่ายดาย
-                        ไม่ว่าจะเป็นการแปลงรูปภาพเดียวหรือรวมหลายรูปภาพเข้าเป็นไฟล์ PDF เดียว
+                        เครื่องมือ <strong>JPG to PDF ออนไลน์</strong> ของ i-am pdf
+                        ช่วยให้คุณสามารถ<strong>แปลงรูปภาพเป็น PDF</strong> ได้อย่างง่ายดาย รองรับหลายรูปแบบไฟล์ ทั้ง
+                        JPG, JPEG, PNG, WEBP และ GIF สามารถเลือกหลายรูปพร้อมกันและรวมเป็น PDF ไฟล์เดียว
                     </p>
                     <p>
-                        การ<strong>แปลง JPG เป็น PDF</strong> มีประโยชน์มากมาย เช่น การสร้างเอกสารจากภาพถ่าย
-                        การรวบรวมรูปภาพเป็นอัลบั้มดิจิทัล หรือการสร้างพอร์ตโฟลิโอ เครื่องมือของเราจะรองรับหลายรูปแบบไฟล์
-                        ทั้ง JPG, JPEG, PNG, GIF, BMP และ WEBP
+                        การ <strong>แปลง JPG เป็น PDF</strong> มีประโยชน์มากมาย เช่น การรวบรวมรูปภาพเป็นอัลบั้มดิจิทัล
+                        การสร้างพอร์ตโฟลิโอ การสร้างเอกสารจากภาพถ่าย หรือการเตรียมไฟล์สำหรับพิมพ์ ไฟล์ PDF
+                        เปิดได้ในทุกอุปกรณ์และรักษาคุณภาพของรูปภาพไว้
                     </p>
                     <p>
-                        ระหว่างรอ คุณสามารถลองใช้เครื่องมือ <a href="pdf-to-jpg.html">PDF to JPG</a> ของเราได้ก่อน
-                        ซึ่งพร้อมใช้งานแล้ววันนี้!
+                        สิ่งที่ทำให้เครื่องมือของเราโดดเด่นคือความปลอดภัย รูปภาพของคุณจะถูกประมวลผลบนเบราว์เซอร์โดยตรง
+                        ไม่มีการอัปโหลดไปยังเซิร์ฟเวอร์ภายนอก ทำให้มั่นใจได้ว่าข้อมูลส่วนตัวจะไม่รั่วไหล
                     </p>
                 </article>
             </div>
@@ -193,8 +287,12 @@
         </div>
     </footer>
 
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- Scripts -->
     <script src="js/app.js"></script>
+    <script src="js/jpg-to-pdf.js"></script>
 </body>
 
 </html>

@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="บีบอัดไฟล์ PDF ลดขนาดไฟล์โดยไม่เสียคุณภาพ ออนไลน์ ฟรี ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
-    <meta name="keywords" content="compress pdf, บีบอัด pdf, ลดขนาด pdf, pdf compressor">
+    <meta name="keywords" content="compress pdf, บีบอัด pdf, ลดขนาด pdf, pdf compressor, ย่อไฟล์ pdf">
     <meta name="author" content="i-am pdf">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="บีบอัด PDF ออนไลน์ | i-am pdf (Coming Soon)">
+    <meta property="og:title" content="บีบอัด PDF ออนไลน์ | ลดขนาดไฟล์ PDF ฟรี | i-am pdf">
     <meta property="og:description" content="บีบอัดไฟล์ PDF ลดขนาดไฟล์โดยไม่เสียคุณภาพ ออนไลน์ ฟรี">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://i-am-pdf.com/compress-pdf.html">
@@ -20,7 +20,7 @@
     <meta property="og:site_name" content="i-am pdf">
 
     <!-- Title -->
-    <title>บีบอัด PDF ออนไลน์ | i-am pdf (Coming Soon)</title>
+    <title>บีบอัด PDF ออนไลน์ | ลดขนาดไฟล์ PDF ฟรี | i-am pdf</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,24 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://i-am-pdf.com/compress-pdf.html">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Compress PDF - i-am pdf",
+    "url": "https://i-am-pdf.com/compress-pdf.html",
+    "description": "บีบอัดไฟล์ PDF ลดขนาดไฟล์โดยไม่เสียคุณภาพ ออนไลน์ ฟรี",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -71,28 +89,69 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Coming Soon Hero -->
-        <section class="coming-soon-hero">
+        <!-- Tool Section -->
+        <section class="hero">
             <div class="container">
-                <div class="hero-content animate-fade-in">
-                    <span class="coming-soon-badge">🚀 Coming Soon</span>
+                <div class="hero-content">
                     <h1>บีบอัด PDF ออนไลน์</h1>
-                    <p>เร็วๆ นี้! เครื่องมือบีบอัดไฟล์ PDF ลดขนาดไฟล์ได้สูงสุด 90% โดยไม่เสียคุณภาพ ฟรี</p>
-                    <a href="pdf-to-jpg.html" class="btn btn-primary btn-lg">
-                        ลองใช้ PDF to JPG ก่อน
-                    </a>
+                    <p>ลดขนาดไฟล์ PDF โดยปรับคุณภาพรูปภาพในเอกสาร ฟรี ประมวลผลบนเบราว์เซอร์</p>
                 </div>
-            </div>
-        </section>
 
-        <!-- Feature Preview -->
-        <section class="section-alt">
-            <div class="container">
-                <h2 class="text-center">ฟีเจอร์ที่จะมาเร็วๆ นี้</h2>
+                <!-- Upload Area -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 14 10 14 10 20" />
+                            <polyline points="20 10 14 10 14 4" />
+                            <line x1="14" y1="10" x2="21" y2="3" />
+                            <line x1="3" y1="21" x2="10" y2="14" />
+                        </svg>
+                    </div>
+                    <h3>ลากไฟล์ PDF มาวางที่นี่</h3>
+                    <p>หรือคลิกเพื่อเลือกไฟล์</p>
+                    <input type="file" id="file-input" accept=".pdf,application/pdf" aria-label="อัปโหลดไฟล์ PDF">
+                </div>
 
-                <div class="features-grid" style="max-width: 900px; margin: 0 auto;">
-                    <article class="feature-card">
-                        <div class="feature-icon">
+                <!-- Converter Section -->
+                <div class="converter-section hidden" id="converter-section">
+                    <!-- File Info -->
+                    <div class="file-info" id="file-info">
+                        <div class="file-icon">PDF</div>
+                        <div class="file-details">
+                            <h4 id="file-name">document.pdf</h4>
+                            <p id="file-size">2.5 MB</p>
+                        </div>
+                        <button class="remove-file" id="remove-file" aria-label="ลบไฟล์">×</button>
+                    </div>
+
+                    <!-- Compression Options -->
+                    <div class="options-section"
+                        style="margin-bottom: 1rem; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                        <label style="display: block; margin-bottom: 1rem;">
+                            <span
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600;">ระดับการบีบอัด:</span>
+                            <select id="compression-level"
+                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); font-size: 1rem;">
+                                <option value="low">ต่ำ - คุณภาพสูง (ลดขนาด ~20%)</option>
+                                <option value="medium" selected>กลาง - สมดุล (ลดขนาด ~50%)</option>
+                                <option value="high">สูง - ขนาดเล็ก (ลดขนาด ~70%)</option>
+                            </select>
+                        </label>
+                        <p style="font-size: 0.875rem; color: var(--gray-500); margin: 0;">
+                            * การบีบอัดจะลดคุณภาพรูปภาพในเอกสาร ข้อความจะยังคงชัดเจน
+                        </p>
+                    </div>
+
+                    <div class="progress-container hidden" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">กำลังบีบอัดไฟล์ PDF... 0%</p>
+                    </div>
+
+                    <div id="action-buttons">
+                        <button class="btn btn-primary btn-lg" id="compress-btn" style="width: 100%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -101,37 +160,68 @@
                                 <line x1="14" y1="10" x2="21" y2="3" />
                                 <line x1="3" y1="21" x2="10" y2="14" />
                             </svg>
-                        </div>
-                        <h3>ลดขนาดได้สูงสุด 90%</h3>
-                        <p>บีบอัดไฟล์ PDF ให้เล็กลงอย่างมีประสิทธิภาพ</p>
-                    </article>
+                            บีบอัด PDF
+                        </button>
+                    </div>
 
-                    <article class="feature-card">
-                        <div class="feature-icon">
+                    <!-- Result Section -->
+                    <div class="hidden" id="result-section" style="margin-top: 1.5rem;">
+                        <div
+                            style="padding: 1rem; background: var(--success); background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-radius: var(--radius-lg); color: white; text-align: center; margin-bottom: 1rem;">
+                            <h4 style="margin-bottom: 0.5rem; font-size: 1.25rem;">บีบอัดสำเร็จ!</h4>
+                            <p style="margin: 0; opacity: 0.9;" id="compression-result">ลดขนาดจาก 5 MB เหลือ 2 MB (ลดลง
+                                60%)</p>
+                        </div>
+                        <button class="btn btn-primary btn-lg" id="download-btn" style="width: 100%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <path d="M12 20h9" />
-                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                        </div>
+                            ดาวน์โหลด PDF ที่บีบอัดแล้ว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trust Signals -->
+                <div class="trust-signals" style="margin-top: 2rem;">
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <span>ประมวลผลบนเบราว์เซอร์ ไม่อัปโหลดไปเซิร์ฟเวอร์</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Section -->
+        <section class="section-alt">
+            <div class="container">
+                <h2 class="text-center">บีบอัด PDF ได้อย่างไร</h2>
+                <p class="text-center">เพียง 3 ขั้นตอนง่ายๆ</p>
+
+                <div class="features-grid" style="max-width: 900px; margin: 0 auto;">
+                    <article class="feature-card">
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">1</div>
+                        <h3>เลือกไฟล์ PDF</h3>
+                        <p>เลือกไฟล์ PDF ที่ต้องการบีบอัด หรือลากมาวางในกล่อง</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">2</div>
                         <h3>เลือกระดับการบีบอัด</h3>
-                        <p>เลือกได้ระหว่างคุณภาพสูงหรือขนาดเล็ก</p>
+                        <p>เลือกระดับการบีบอัดที่เหมาะกับการใช้งานของคุณ</p>
                     </article>
 
                     <article class="feature-card">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                                <line x1="16" y1="13" x2="8" y2="13" />
-                                <line x1="16" y1="17" x2="8" y2="17" />
-                            </svg>
-                        </div>
-                        <h3>รักษาคุณภาพข้อความ</h3>
-                        <p>ข้อความและรูปภาพยังคมชัดหลังบีบอัด</p>
+                        <div class="feature-icon" style="font-size: 1.5rem; font-weight: 700;">3</div>
+                        <h3>ดาวน์โหลด</h3>
+                        <p>กดปุ่มบีบอัด รอสักครู่แล้วดาวน์โหลดได้ทันที</p>
                     </article>
                 </div>
             </div>
@@ -143,17 +233,18 @@
                 <article>
                     <h2>เกี่ยวกับเครื่องมือบีบอัด PDF</h2>
                     <p>
-                        เครื่องมือ <strong>บีบอัด PDF ออนไลน์</strong> ของ i-am pdf กำลังอยู่ในระหว่างการพัฒนา เร็วๆ
-                        นี้คุณจะสามารถ<strong>ลดขนาดไฟล์ PDF</strong> ได้สูงสุด 90% โดยยังคงรักษาคุณภาพของเอกสารไว้
+                        เครื่องมือ <strong>บีบอัด PDF ออนไลน์</strong> ของ i-am pdf ช่วยให้คุณสามารถ<strong>ลดขนาดไฟล์
+                            PDF</strong> ได้โดยการปรับคุณภาพรูปภาพในเอกสาร เหมาะสำหรับไฟล์ PDF
+                        ที่มีรูปภาพจำนวนมากหรือรูปภาพความละเอียดสูง
                     </p>
                     <p>
                         การ <strong>Compress PDF</strong> หรือบีบอัดไฟล์ PDF มีประโยชน์มากมาย
                         ไม่ว่าจะเป็นการส่งอีเมลที่มีข้อจำกัดขนาดไฟล์ การอัปโหลดเอกสารบนเว็บไซต์
-                        หรือการประหยัดพื้นที่จัดเก็บ โดยเฉพาะไฟล์ PDF ที่มีรูปภาพจำนวนมาก
+                        หรือการประหยัดพื้นที่จัดเก็บ
                     </p>
                     <p>
-                        ระหว่างรอ คุณสามารถลองใช้เครื่องมือ <a href="pdf-to-jpg.html">PDF to JPG</a> ของเราได้ก่อน
-                        ซึ่งพร้อมใช้งานแล้ววันนี้!
+                        วิธีการทำงาน: เครื่องมือจะแปลงแต่ละหน้าของ PDF เป็นรูปภาพ แล้วสร้าง PDF
+                        ใหม่ด้วยรูปภาพที่ถูกบีบอัด ทำให้ขนาดไฟล์ลดลงอย่างมาก โดยเฉพาะ PDF ที่มีรูปภาพหรือสแกนเอกสาร
                     </p>
                 </article>
             </div>
@@ -196,8 +287,15 @@
         </div>
     </footer>
 
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- Scripts -->
     <script src="js/app.js"></script>
+    <script src="js/compress-pdf.js"></script>
 </body>
 
 </html>
