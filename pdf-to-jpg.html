@@ -140,7 +140,7 @@
             <div class="container">
                 <div class="hero-content">
                     <h1>PDF to JPG ออนไลน์</h1>
-                    <p>แปลงไฟล์ PDF เป็นรูปภาพ JPG คุณภาพสูง ฟรี ไม่ต้องสมัครสมาชิก</p>
+                    <p>แปลงไฟล์ PDF เป็นรูปภาพ JPG คุณภาพสูง ฟรี ไม่ต้องสมัครสมาชิก - รองรับหลายไฟล์พร้อมกัน</p>
                 </div>
 
                 <!-- Upload Area -->
@@ -154,20 +154,27 @@
                         </svg>
                     </div>
                     <h3>ลากไฟล์ PDF มาวางที่นี่</h3>
-                    <p>หรือคลิกเพื่อเลือกไฟล์</p>
-                    <input type="file" id="file-input" accept=".pdf,application/pdf" aria-label="อัปโหลดไฟล์ PDF">
+                    <p>หรือคลิกเพื่อเลือกไฟล์ (รองรับหลายไฟล์)</p>
+                    <input type="file" id="file-input" accept=".pdf,application/pdf" multiple
+                        aria-label="อัปโหลดไฟล์ PDF">
                 </div>
 
                 <!-- Converter Section (Hidden by default) -->
                 <div class="converter-section hidden" id="converter-section">
-                    <div class="file-info" id="file-info">
-                        <div class="file-icon">PDF</div>
-                        <div class="file-details">
-                            <h4 id="file-name">document.pdf</h4>
-                            <p id="file-size">2.5 MB</p>
-                        </div>
-                        <button class="remove-file" id="remove-file" aria-label="ลบไฟล์">×</button>
-                    </div>
+                    <!-- File List -->
+                    <div id="file-list" class="file-list"></div>
+
+                    <!-- Add More Files Button -->
+                    <button class="btn btn-secondary" id="add-more-files" style="width: 100%; margin-bottom: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        เพิ่มไฟล์ PDF
+                    </button>
+                    <input type="file" id="add-file-input" accept=".pdf,application/pdf" multiple style="display: none;"
+                        aria-label="เพิ่มไฟล์ PDF">
 
                     <div class="progress-container hidden" id="progress-container">
                         <div class="progress-bar">
