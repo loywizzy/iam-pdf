@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://i-am-pdf.com/sitemap.xml
+
+# Disallow admin or private paths
+Disallow: /admin/
+Disallow: /private/
