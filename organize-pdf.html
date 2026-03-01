@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="แยกไฟล์ PDF แยกหน้า PDF เป็นไฟล์ย่อย ออนไลน์ ฟรี รวดเร็ว ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
-    <meta name="keywords" content="split pdf, แยก pdf, แยกหน้า pdf, แยกไฟล์ pdf, extract pdf pages">
+        content="จัดเรียง ลบ หมุนหน้า PDF ออนไลน์ ฟรี รวดเร็ว ไม่ต้องติดตั้งโปรแกรม ที่ i-am pdf">
+    <meta name="keywords" content="organize pdf, จัดการหน้า pdf, ลบหน้า pdf, หมุนหน้า pdf, จัดเรียง pdf">
     <meta name="author" content="i-am pdf">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="แยก PDF ออนไลน์ | แยกหน้าไฟล์ PDF ฟรี | i-am pdf">
-    <meta property="og:description" content="แยกไฟล์ PDF เป็นไฟล์ย่อย แยกเฉพาะหน้าที่ต้องการ ออนไลน์ ฟรี รวดเร็ว">
+    <meta property="og:title" content="จัดการหน้า PDF ออนไลน์ | ลบ หมุน จัดเรียง ฟรี | i-am pdf">
+    <meta property="og:description" content="ลบหน้า หมุนหน้า หรือสลับตำแหน่งหน้า PDF ได้ตามต้องการ ฟรี รวดเร็ว">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://i-am-pdf.com/split-pdf.html">
+    <meta property="og:url" content="https://i-am-pdf.com/organize-pdf.html">
     <meta property="og:locale" content="th_TH">
     <meta property="og:site_name" content="i-am pdf">
 
     <!-- Title -->
-    <title>แยก PDF ออนไลน์ | แยกหน้าไฟล์ PDF ฟรี | i-am pdf</title>
+    <title>จัดการหน้า PDF ออนไลน์ | ลบ หมุน จัดเรียง ฟรี | i-am pdf</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,11 +28,99 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css?v=1772370859308">
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://i-am-pdf.com/split-pdf.html">
-
+    <link rel="stylesheet" href="css/style.css?v=1772370859305">
+    
+    <style>
+        .page-item {
+            position: relative;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            cursor: grab;
+            transition: box-shadow 0.2s;
+        }
+        .page-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .page-item img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: block;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        .page-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-icon {
+            background: #f1f5f9;
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.2s;
+        }
+        .btn-icon:hover {
+            background: #e2e8f0;
+            color: var(--primary-color);
+        }
+        .btn-icon.delete:hover {
+            color: #ef4444;
+            background: #fee2e2;
+        }
+        .page-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-top: 5px;
+        }
+        .page-item.dragging {
+            opacity: 0.5;
+        }
+        .deleted-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 6px;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .page-item.is-deleted .deleted-overlay {
+            opacity: 1;
+        }
+        .page-item.is-deleted img {
+            filter: grayscale(100%);
+        }
+        .page-item.is-deleted .btn-icon:not(.restore) {
+            display: none;
+        }
+        .btn-icon.restore {
+            display: none;
+        }
+        .page-item.is-deleted .btn-icon.restore {
+            display: flex;
+            color: #10b981;
+        }
+    </style>
 </head>
 
 <body>
@@ -56,8 +144,8 @@
                             <li><a href="pdf-to-jpg.html" >PDF to JPG</a></li>
                             <li><a href="jpg-to-pdf.html" >JPG to PDF</a></li>
                             <li><a href="merge-pdf.html" >รวม PDF</a></li>
-                            <li><a href="split-pdf.html" class="active">แยก PDF</a></li>
-                            <li><a href="organize-pdf.html" >จัดการหน้า</a></li>
+                            <li><a href="split-pdf.html" >แยก PDF</a></li>
+                            <li><a href="organize-pdf.html" class="active">จัดการหน้า</a></li>
                             <li><a href="watermark-pdf.html" >ใส่ลายน้ำ</a></li>
                             <li><a href="compress-pdf.html" >บีบอัด PDF</a></li>
                         </ul>
@@ -77,8 +165,8 @@
             <a href="pdf-to-jpg.html" >PDF to JPG</a>
             <a href="jpg-to-pdf.html" >JPG to PDF</a>
             <a href="merge-pdf.html" >รวม PDF</a>
-            <a href="split-pdf.html" class="active">แยก PDF</a>
-            <a href="organize-pdf.html" >จัดการหน้า</a>
+            <a href="split-pdf.html" >แยก PDF</a>
+            <a href="organize-pdf.html" class="active">จัดการหน้า</a>
             <a href="watermark-pdf.html" >ใส่ลายน้ำ</a>
             <a href="compress-pdf.html" >บีบอัด PDF</a>
         </div>
@@ -90,18 +178,16 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>แยก PDF ออนไลน์</h1>
-                    <p>แยกไฟล์ PDF เป็นไฟล์เดี่ยวหรือดึงเฉพาะหน้าที่ต้องการ ฟรี</p>
+                    <h1>จัดการหน้า PDF</h1>
+                    <p>ลบหน้าที่ไม่ต้องการ หมุนกระดาษ หรือลากเพื่อสลับตำแหน่งหน้า ฟรี</p>
                 </div>
 
                 <!-- Upload Area -->
                 <div class="upload-area" id="upload-area">
                     <div class="upload-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="12" y1="18" x2="12" y2="12"></line>
-                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
                         </svg>
                     </div>
                     <h3>ลากไฟล์ PDF มาวางที่นี่</h3>
@@ -114,21 +200,12 @@
                 <div class="converter-section hidden" id="converter-section">
                     <h3 id="file-name-display" style="text-align: center; margin-bottom: 1rem; word-break: break-all;"></h3>
                     
-                    <div class="split-options" style="margin-bottom: 2rem; text-align: center; display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin-left: auto; margin-right: auto;">
-                        <label style="font-weight: 600;">เลือกรูปแบบการแยก:</label>
-                        <select id="split-mode" class="form-control" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);">
-                            <option value="extract">แยกหน้าที่เลือกเป็น 1 ไฟล์</option>
-                            <option value="individual">แยกหน้าที่เลือกเป็นไฟล์ละ 1 หน้า (ZIP)</option>
-                        </select>
-                        
-                        <div style="margin-top: 10px;">
-                            <label style="font-weight: 600; display: block; margin-bottom: 5px;">เลือกหน้า (คลิกที่รูปหน้าด้านล่าง):</label>
-                            <input type="text" id="page-selection" class="form-control" placeholder="เช่น 1, 3, 5-10" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); width: 100%;">
-                        </div>
+                    <div style="text-align: center; margin-bottom: 1rem; color: var(--gray-500); font-size: 0.9rem;">
+                        <p>💡 ลากหน้าเพื่อสลับลำดับ • กด 🗑️ เพื่อลบหน้า • กด ↻ เพื่อหมุนหน้า</p>
                     </div>
 
                     <!-- Page Preview Grid -->
-                    <div id="page-grid" class="tools-grid" style="margin-top: 2rem; max-height: 400px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <div id="page-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 1rem; max-height: 500px; overflow-y: auto; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: #f8fafc;">
                         <!-- Pages will be rendered here -->
                     </div>
 
@@ -139,17 +216,17 @@
                         <p class="progress-text" id="progress-text">กำลังประมวลผล... 0%</p>
                     </div>
 
-                    <div id="action-buttons" style="margin-top: 2rem;">
-                        <button class="btn btn-primary btn-lg" id="split-btn" style="width: 100%;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="12" y1="18" x2="12" y2="12"></line>
-                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                    <div id="action-buttons" style="margin-top: 2rem; display: flex; gap: 10px;">
+                        <button class="btn btn-secondary btn-lg" id="reset-btn" style="flex: 1;">
+                            เริ่มใหม่
+                        </button>
+                        <button class="btn btn-primary btn-lg" id="apply-btn" style="flex: 2;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
                             </svg>
-                            แยกไฟล์ PDF
+                            บันทึกการเปลี่ยนแปลง
                         </button>
                     </div>
 
@@ -162,25 +239,12 @@
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            ดาวน์โหลดไฟล์ที่แยกแล้ว
+                            ดาวน์โหลด PDF 
                         </button>
-                    </div>
-                </div>
-
-                <!-- Trust Signals -->
-                <div class="trust-signals" style="margin-top: 2rem;">
-                    <div class="trust-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                        </svg>
-                        <span>ประมวลผลบนเบราว์เซอร์ ไม่อัปโหลดไปเซิร์ฟเวอร์</span>
                     </div>
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->
@@ -194,33 +258,24 @@
                     </a>
                     <p>เครื่องมือแปลงไฟล์ PDF ออนไลน์<br>ฟรี รวดเร็ว และปลอดภัย</p>
                 </div>
-
                 <div class="footer-links">
                     <h4>เครื่องมือ</h4>
                     <ul>
-                        <li><a href="pdf-to-jpg.html">PDF to JPG</a></li>
-                        <li><a href="jpg-to-pdf.html">JPG to PDF</a></li>
                         <li><a href="merge-pdf.html">รวม PDF</a></li>
                         <li><a href="split-pdf.html">แยก PDF</a></li>
-                        <li><a href="compress-pdf.html">บีบอัด PDF</a></li>
+                        <li><a href="organize-pdf.html">จัดการหน้า</a></li>
                     </ul>
                 </div>
-
-                <div class="footer-links">
-                    <h4>ลิงก์</h4>
-                    <ul>
-                        <li><a href="/">หน้าแรก</a></li>
-                    </ul>
-                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 i-am pdf. สงวนลิขสิทธิ์ทุกประการ</p>
             </div>
         </div>
     </footer>
 
-    <!-- JSZip Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- PDF.js Library for rendering thumbnails -->
+    <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <!-- PDF-lib Library for splitting -->
+    <!-- PDF-lib Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 
     <script>
@@ -228,7 +283,7 @@
     </script>
     <!-- Scripts -->
     <script src="js/app.js"></script>
-    <script src="js/split-pdf.js"></script>
+    <script src="js/organize-pdf.js"></script>
 </body>
 
 </html>

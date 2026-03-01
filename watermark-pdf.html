@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="ใส่ลายน้ำ PDF ออนไลน์ ฟรี พิมพ์ข้อความลายน้ำลงบนเอกสาร PDF ได้ทุกหน้า ที่ i-am pdf">
+    <meta name="keywords" content="watermark pdf, ใส่ลายน้ำ pdf, เพิ่มลายน้ำ, ป้องกัน pdf">
+    <meta name="author" content="i-am pdf">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ใส่ลายน้ำ PDF ออนไลน์ ฟรี | i-am pdf">
+    <meta property="og:description" content="พิมพ์ข้อความลายน้ำลงบนเอกสาร PDF ปรับความโปร่งใสและสีได้ ฟรี">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://i-am-pdf.com/watermark-pdf.html">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:site_name" content="i-am pdf">
+
+    <!-- Title -->
+    <title>ใส่ลายน้ำ PDF ออนไลน์ ฟรี | i-am pdf</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css?v=1772370859308">
+    
+    <style>
+        .options-panel {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .options-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .range-slider {
+            width: 100%;
+            accent-color: var(--primary-color);
+        }
+        .preview-box {
+            background: #f8fafc;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .preview-text {
+            font-weight: bold;
+            text-transform: uppercase;
+            pointer-events: none;
+            transition: all 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">PDF</div>
+                <span>i-am pdf</span>
+            </a>
+
+                        <nav>
+                <ul class="nav-list">
+                    <li><a href="/" >หน้าแรก</a></li>
+                    <li class="dropdown">
+                        <button class="nav-link active" aria-haspopup="true" aria-expanded="false">
+                            เครื่องมือ PDF
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="pdf-to-jpg.html" >PDF to JPG</a></li>
+                            <li><a href="jpg-to-pdf.html" >JPG to PDF</a></li>
+                            <li><a href="merge-pdf.html" >รวม PDF</a></li>
+                            <li><a href="split-pdf.html" >แยก PDF</a></li>
+                            <li><a href="organize-pdf.html" >จัดการหน้า</a></li>
+                            <li><a href="watermark-pdf.html" class="active">ใส่ลายน้ำ</a></li>
+                            <li><a href="compress-pdf.html" >บีบอัด PDF</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="เปิดเมนู" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+                <div class="mobile-nav" id="mobile-nav">
+            <a href="/" >หน้าแรก</a>
+            <a href="pdf-to-jpg.html" >PDF to JPG</a>
+            <a href="jpg-to-pdf.html" >JPG to PDF</a>
+            <a href="merge-pdf.html" >รวม PDF</a>
+            <a href="split-pdf.html" >แยก PDF</a>
+            <a href="organize-pdf.html" >จัดการหน้า</a>
+            <a href="watermark-pdf.html" class="active">ใส่ลายน้ำ</a>
+            <a href="compress-pdf.html" >บีบอัด PDF</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Tool Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>ใส่ลายน้ำ PDF</h1>
+                    <p>ประทับข้อความลายน้ำลงบนทุกหน้าของไฟล์ PDF ฟรี</p>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                    </div>
+                    <h3>ลากไฟล์ PDF มาวางที่นี่</h3>
+                    <p>หรือคลิกเพื่อเลือกไฟล์ (1 ไฟล์)</p>
+                    <input type="file" id="file-input" accept=".pdf,application/pdf"
+                        aria-label="อัปโหลดไฟล์ PDF">
+                </div>
+
+                <!-- Converter Section -->
+                <div class="converter-section hidden" id="converter-section">
+                    <h3 id="file-name-display" style="text-align: center; margin-bottom: 1rem; word-break: break-all;"></h3>
+                    
+                    <div class="options-panel">
+                        <div>
+                            <div class="form-group">
+                                <label for="watermark-text">ข้อความลายน้ำ:</label>
+                                <input type="text" id="watermark-text" class="form-control" value="CONFIDENTIAL" placeholder="เช่น CONFIDENTIAL, COPY, ตัวอย่าง">
+                            </div>
+                            
+                            <div class="form-group" style="display: flex; gap: 10px;">
+                                <div style="flex: 1;">
+                                    <label for="text-color">สีตัวอักษร:</label>
+                                    <input type="color" id="text-color" class="form-control" value="#ff0000" style="padding: 5px; height: 45px;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="font-size">ขนาดตัวอักษร:</label>
+                                    <input type="number" id="font-size" class="form-control" value="60" min="10" max="200">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="opacity">ความโปร่งใส (<span id="opacity-val">0.3</span>):</label>
+                                <input type="range" id="opacity" class="range-slider" min="0.1" max="1" step="0.1" value="0.3">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rotation">องศาการเอียง (<span id="rotation-val">45</span>°):</label>
+                                <input type="range" id="rotation" class="range-slider" min="0" max="360" step="15" value="45">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">ตัวอย่างลายน้ำ:</label>
+                            <div class="preview-box">
+                                <div id="watermark-preview" class="preview-text" style="color: rgba(255, 0, 0, 0.3); font-size: 30px; transform: rotate(-45deg);">
+                                    CONFIDENTIAL
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-container hidden" id="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="progress-text" id="progress-text">กำลังประมวลผล... 0%</p>
+                    </div>
+
+                    <div id="action-buttons" style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary btn-lg" id="reset-btn" style="flex: 1;">เริ่มใหม่</button>
+                        <button class="btn btn-primary btn-lg" id="apply-btn" style="flex: 2;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                            ใส่ลายน้ำ
+                        </button>
+                    </div>
+
+                    <div class="hidden" id="download-section" style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary btn-lg" id="download-btn" style="width: 100%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            ดาวน์โหลด PDF 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">PDF</div>
+                        <span>i-am pdf</span>
+                    </a>
+                    <p>เครื่องมือแปลงไฟล์ PDF ออนไลน์<br>ฟรี รวดเร็ว และปลอดภัย</p>
+                </div>
+                <div class="footer-links">
+                    <h4>เครื่องมือ</h4>
+                    <ul>
+                        <li><a href="merge-pdf.html">รวม PDF</a></li>
+                        <li><a href="split-pdf.html">แยก PDF</a></li>
+                        <li><a href="organize-pdf.html">จัดการหน้า</a></li>
+                        <li><a href="watermark-pdf.html">ใส่ลายน้ำ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 i-am pdf. สงวนลิขสิทธิ์ทุกประการ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PDF-lib Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/fontkit.umd.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/watermark-pdf.js"></script>
+</body>
+
+</html>
