@@ -10,6 +10,7 @@ files.forEach(file => {
 
     // Determine which file is active
     const isIndex = file === 'index.html';
+    const isEditPdf = file === 'edit-pdf.html';
     const isPdfToJpg = file === 'pdf-to-jpg.html';
     const isJpgToPdf = file === 'jpg-to-pdf.html';
     const isMergePdf = file === 'merge-pdf.html';
@@ -27,6 +28,7 @@ files.forEach(file => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </button>
                         <ul class="dropdown-menu">
+                            <li><a href="edit-pdf.html" ${isEditPdf ? 'class="active"' : ''}>แก้ไข PDF</a></li>
                             <li><a href="pdf-to-jpg.html" ${isPdfToJpg ? 'class="active"' : ''}>PDF to JPG</a></li>
                             <li><a href="jpg-to-pdf.html" ${isJpgToPdf ? 'class="active"' : ''}>JPG to PDF</a></li>
                             <li><a href="merge-pdf.html" ${isMergePdf ? 'class="active"' : ''}>รวม PDF</a></li>
@@ -41,6 +43,7 @@ files.forEach(file => {
 
     const newMobileNav = `        <div class="mobile-nav" id="mobile-nav">
             <a href="/" ${isIndex ? 'class="active"' : ''}>หน้าแรก</a>
+            <a href="edit-pdf.html" ${isEditPdf ? 'class="active"' : ''}>แก้ไข PDF</a>
             <a href="pdf-to-jpg.html" ${isPdfToJpg ? 'class="active"' : ''}>PDF to JPG</a>
             <a href="jpg-to-pdf.html" ${isJpgToPdf ? 'class="active"' : ''}>JPG to PDF</a>
             <a href="merge-pdf.html" ${isMergePdf ? 'class="active"' : ''}>รวม PDF</a>
