@@ -1688,3 +1688,33 @@ footer {
     padding-top: 6rem;
   }
 }
+
+
+/* ==========================================
+   PDF Editor v2 — Additional Stamp Styles
+   ========================================== */
+
+.stamp-rejected {
+    border-color: #DC2626;
+    color: #DC2626;
+}
+.stamp-reviewed {
+    border-color: #0891B2;
+    color: #0891B2;
+}
+.stamp-option:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Text overlay placeholder style */
+#text-overlay-input:empty::before {
+    content: attr(placeholder);
+    color: #9CA3AF;
+    pointer-events: none;
+}
+
+/* Toast container smooth animation */
+#toast-container > div {
+    will-change: opacity, transform;
+}
