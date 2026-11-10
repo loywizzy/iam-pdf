@@ -88,8 +88,11 @@
 
     const docFilename      = document.getElementById('doc-filename');
     const pageNumDisplay   = document.getElementById('page-num-display');
+    const pageNumInput     = document.getElementById('page-num-input');
+    const pageNumTotal     = document.getElementById('page-num-total');
     const btnPrevPage      = document.getElementById('btn-prev-page');
     const btnNextPage      = document.getElementById('btn-next-page');
+    const btnToggleSidebarTop = document.getElementById('btn-toggle-sidebar-top');
     const zoomVal          = document.getElementById('zoom-val');
     const btnZoomIn        = document.getElementById('btn-zoom-in');
     const btnZoomOut       = document.getElementById('btn-zoom-out');
@@ -349,6 +352,11 @@
         if (!state.pdfDocJs) return;
 
         if (pageNumDisplay) pageNumDisplay.textContent = `${state.currentPage} / ${state.totalPages}`;
+        if (pageNumInput) {
+            pageNumInput.value = state.currentPage;
+            pageNumInput.max = state.totalPages;
+        }
+        if (pageNumTotal) pageNumTotal.textContent = state.totalPages;
         if (zoomVal) zoomVal.textContent = `${Math.round(state.zoom * 100)}%`;
         if (btnPrevPage) btnPrevPage.disabled = state.currentPage <= 1;
         if (btnNextPage) btnNextPage.disabled = state.currentPage >= state.totalPages;
@@ -356,7 +364,16 @@
         document.querySelectorAll('.thumb-item').forEach((item, idx) => {
             const isActive = idx + 1 === state.currentPage;
             item.classList.toggle('active', isActive);
-            if (isActive) item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            if (isActive) {
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                // If not yet rendered, force render active page thumbnail
+                const canvas = item.querySelector('.thumb-canvas');
+                const placeholder = item.querySelector('.thumb-placeholder');
+                if (canvas && !canvas.dataset.rendered) {
+                    canvas.dataset.rendered = 'true';
+                    renderSingleThumbnail(idx + 1, canvas, placeholder);
+                }
+            }
         });
 
         const page = await state.pdfDocJs.getPage(state.currentPage);
@@ -388,10 +405,42 @@
     }
 
     // ==========================================
-    // Sidebar Thumbnails
+    // Sidebar Thumbnails (Lazy Rendering with IntersectionObserver)
     // ==========================================
+    let thumbnailObserver = null;
+
     async function renderThumbnails() {
+        if (thumbnailObserver) {
+            thumbnailObserver.disconnect();
+            thumbnailObserver = null;
+        }
+
         thumbnailList.innerHTML = '';
+
+        const hasObserver = typeof window.IntersectionObserver === 'function';
+        if (hasObserver) {
+            thumbnailObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const item = entry.target;
+                        const pageNum = parseInt(item.dataset.page, 10);
+                        const canvas = item.querySelector('.thumb-canvas');
+                        const placeholder = item.querySelector('.thumb-placeholder');
+
+                        if (canvas && !canvas.dataset.rendered) {
+                            canvas.dataset.rendered = 'true';
+                            renderSingleThumbnail(pageNum, canvas, placeholder);
+                        }
+                        observer.unobserve(item);
+                    }
+                });
+            }, {
+                root: thumbnailList,
+                rootMargin: '200px 0px 200px 0px',
+                threshold: 0.01
+            });
+        }
+
         for (let i = 1; i <= state.totalPages; i++) {
             const pageNum = i;
             const thumbItem = document.createElement('div');
@@ -400,8 +449,16 @@
 
             const canvasWrapper = document.createElement('div');
             canvasWrapper.className = 'thumb-canvas-wrapper';
+
+            const placeholder = document.createElement('div');
+            placeholder.className = 'thumb-placeholder';
+            placeholder.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.35"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg><span>หน้า ${pageNum}</span>`;
+
             const thumbCanvas = document.createElement('canvas');
             thumbCanvas.className = 'thumb-canvas';
+            thumbCanvas.style.display = 'none';
+
+            canvasWrapper.appendChild(placeholder);
             canvasWrapper.appendChild(thumbCanvas);
 
             const meta = document.createElement('div');
@@ -410,6 +467,7 @@
 
             thumbItem.appendChild(canvasWrapper);
             thumbItem.appendChild(meta);
+
             thumbItem.addEventListener('click', () => {
                 if (state.currentPage !== pageNum) {
                     commitTextOverlay();
@@ -418,24 +476,65 @@
                     renderCurrentPage();
                 }
             });
+
             thumbnailList.appendChild(thumbItem);
 
-            (async () => {
-                try {
-                    const p = await state.pdfDocJs.getPage(pageNum);
-                    const vp = p.getViewport({ scale: 0.25 });
-                    thumbCanvas.width = vp.width;
-                    thumbCanvas.height = vp.height;
-                    const ctx = thumbCanvas.getContext('2d');
-                    await p.render({ canvasContext: ctx, viewport: vp }).promise;
-                } catch (e) { /* ignore thumbnail errors */ }
-            })();
+            if (hasObserver) {
+                thumbnailObserver.observe(thumbItem);
+            } else {
+                renderSingleThumbnail(pageNum, thumbCanvas, placeholder);
+            }
         }
     }
 
-    btnToggleSidebar && btnToggleSidebar.addEventListener('click', () => {
+    async function renderSingleThumbnail(pageNum, canvas, placeholder) {
+        try {
+            const p = await state.pdfDocJs.getPage(pageNum);
+            const vp = p.getViewport({ scale: 0.25 });
+            canvas.width = vp.width;
+            canvas.height = vp.height;
+            const ctx = canvas.getContext('2d');
+            await p.render({ canvasContext: ctx, viewport: vp }).promise;
+            canvas.style.display = 'block';
+            if (placeholder) placeholder.style.display = 'none';
+        } catch (e) {
+            console.warn(`Could not render thumbnail for page ${pageNum}`, e);
+        }
+    }
+
+    function toggleSidebar() {
         editorSidebar.classList.toggle('collapsed');
-    });
+        const isCollapsed = editorSidebar.classList.contains('collapsed');
+        if (btnToggleSidebarTop) {
+            btnToggleSidebarTop.classList.toggle('active', !isCollapsed);
+        }
+    }
+
+    btnToggleSidebar && btnToggleSidebar.addEventListener('click', toggleSidebar);
+    btnToggleSidebarTop && btnToggleSidebarTop.addEventListener('click', toggleSidebar);
+
+    // Page Number Input Jump
+    if (pageNumInput) {
+        const handlePageJump = () => {
+            let p = parseInt(pageNumInput.value, 10);
+            if (isNaN(p) || p < 1) p = 1;
+            if (p > state.totalPages) p = state.totalPages;
+            pageNumInput.value = p;
+            if (p !== state.currentPage) {
+                commitTextOverlay();
+                state.currentPage = p;
+                state.selectedAnnotation = null;
+                renderCurrentPage();
+            }
+        };
+        pageNumInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handlePageJump();
+            }
+        });
+        pageNumInput.addEventListener('change', handlePageJump);
+    }
 
     // ==========================================
     // Zoom Controls (Buttons + Ctrl+Scroll)

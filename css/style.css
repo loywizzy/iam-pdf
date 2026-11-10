@@ -1185,9 +1185,11 @@ footer {
   border: 1px solid var(--gray-200);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
-  margin-top: 1.5rem;
-  margin-bottom: 3rem;
-  min-height: 820px;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+  height: calc(100vh - 120px);
+  min-height: 620px;
+  max-height: 920px;
 }
 
 /* Editor Header Bar */
@@ -1282,30 +1284,41 @@ footer {
 /* Main Workspace */
 .editor-workspace {
   display: flex;
-  flex: 1;
-  height: 750px;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
   position: relative;
   overflow: hidden;
 }
 
 /* Left Page Strip (Thumbnails) */
 .editor-sidebar {
-  width: 200px;
+  width: 210px;
+  min-width: 210px;
+  max-width: 210px;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
   background: var(--white);
   border-right: 1px solid var(--gray-200);
   display: flex;
   flex-direction: column;
-  transition: width var(--transition-base);
+  transition: width var(--transition-base), min-width var(--transition-base), max-width var(--transition-base);
   z-index: 10;
+  overflow: hidden;
 }
 
 .editor-sidebar.collapsed {
-  width: 0;
-  overflow: hidden;
-  border-right: none;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  border-right: none !important;
+  overflow: hidden !important;
+  visibility: hidden;
 }
 
 .sidebar-header {
+  flex-shrink: 0;
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
@@ -1314,15 +1327,38 @@ footer {
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--gray-700);
+  user-select: none;
 }
 
 .sidebar-thumb-list {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
+}
+
+.sidebar-thumb-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-thumb-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-thumb-list::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 9999px;
+}
+
+.sidebar-thumb-list::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
 }
 
 .thumb-item {
@@ -1334,6 +1370,7 @@ footer {
   cursor: pointer;
   transition: all var(--transition-fast);
   text-align: center;
+  flex-shrink: 0;
 }
 
 .thumb-item:hover {
@@ -1351,8 +1388,24 @@ footer {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: #F1F5F9;
   box-shadow: var(--shadow-sm);
+  aspect-ratio: 1 / 1.414;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+}
+
+.thumb-placeholder {
+  color: var(--gray-400);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
 }
 
 .thumb-canvas {
@@ -1395,7 +1448,9 @@ footer {
 
 /* Center Stage Viewport */
 .editor-viewport {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
   background: #E2E8F0;
   overflow: auto;
   position: relative;
@@ -1666,23 +1721,36 @@ footer {
 
 /* Responsive Adjustments */
 @media (max-width: 900px) {
+  .editor-layout {
+    height: 700px;
+    max-height: 90vh;
+  }
   .editor-workspace {
     flex-direction: column;
-    height: 650px;
+    height: 100%;
   }
   .editor-sidebar {
     width: 100%;
-    height: 120px;
+    min-width: 100%;
+    max-width: 100%;
+    height: 140px;
+    min-height: 140px;
+    max-height: 140px;
     border-right: none;
     border-bottom: 1px solid var(--gray-200);
+  }
+  .sidebar-header {
+    padding: 0.4rem 0.75rem;
   }
   .sidebar-thumb-list {
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
+    padding: 0.4rem 0.75rem;
   }
   .thumb-item {
     min-width: 80px;
+    max-width: 90px;
   }
   .editor-viewport {
     padding-top: 6rem;
