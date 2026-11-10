@@ -96,6 +96,8 @@
     const zoomVal          = document.getElementById('zoom-val');
     const btnZoomIn        = document.getElementById('btn-zoom-in');
     const btnZoomOut       = document.getElementById('btn-zoom-out');
+    const btnFitPage       = document.getElementById('btn-fit-page');
+    const editorViewport   = document.getElementById('editor-viewport');
     const btnUndo          = document.getElementById('btn-undo');
     const btnRedo          = document.getElementById('btn-redo');
     const btnChangeFile    = document.getElementById('btn-change-file');
@@ -335,6 +337,12 @@
             heroSection.classList.add('hidden');
             editorSection.classList.remove('hidden');
 
+            // Pre-calculate page viewport to fit screen perfectly
+            const firstPage = await state.pdfDocJs.getPage(1);
+            const firstUnscaledVp = firstPage.getViewport({ scale: 1.0 });
+            state.pageViewport = firstUnscaledVp;
+            state.zoom = calculateFitScale(firstUnscaledVp);
+
             await renderThumbnails();
             await renderCurrentPage();
             updateHistoryButtons();
@@ -343,6 +351,31 @@
             console.error('Error loading PDF:', err);
             showToast('เกิดข้อผิดพลาดในการเปิดไฟล์ PDF: ' + (err.message || 'ไฟล์อาจเสียหายหรือติดรหัสผ่าน'), 'error');
         }
+    }
+
+    // ==========================================
+    // Fit Page & Scaling Engine
+    // ==========================================
+    function calculateFitScale(pageViewport) {
+        if (!pageViewport || !editorViewport) return 1.0;
+        // Available space inside editorViewport with safety padding
+        const paddingX = 36;
+        const paddingY = 36;
+        const availW = Math.max(150, editorViewport.clientWidth - paddingX);
+        const availH = Math.max(150, editorViewport.clientHeight - paddingY);
+
+        const scaleX = availW / pageViewport.width;
+        const scaleY = availH / pageViewport.height;
+
+        // Strictly fit inside both width and height so NO scrollbar appears
+        let fitScale = Math.floor(Math.min(scaleX, scaleY) * 100) / 100;
+        return Math.max(CONFIG.minZoom, Math.min(CONFIG.maxZoom, fitScale));
+    }
+
+    function fitToPage() {
+        if (!state.pageViewport) return;
+        state.zoom = calculateFitScale(state.pageViewport);
+        renderCurrentPage();
     }
 
     // ==========================================
@@ -508,10 +541,25 @@
         if (btnToggleSidebarTop) {
             btnToggleSidebarTop.classList.toggle('active', !isCollapsed);
         }
+        setTimeout(() => {
+            if (state.pageViewport) {
+                fitToPage();
+            }
+        }, 280);
     }
 
     btnToggleSidebar && btnToggleSidebar.addEventListener('click', toggleSidebar);
     btnToggleSidebarTop && btnToggleSidebarTop.addEventListener('click', toggleSidebar);
+
+    // Auto fit on window resize
+    window.addEventListener('resize', () => {
+        clearTimeout(window._resizeTimer);
+        window._resizeTimer = setTimeout(() => {
+            if (state.pdfDocJs && editorSection && !editorSection.classList.contains('hidden') && state.pageViewport) {
+                fitToPage();
+            }
+        }, 150);
+    });
 
     // Page Number Input Jump
     if (pageNumInput) {
@@ -566,6 +614,10 @@
 
     btnZoomIn  && btnZoomIn.addEventListener('click',  () => applyZoom(state.zoom + CONFIG.zoomStep));
     btnZoomOut && btnZoomOut.addEventListener('click', () => applyZoom(state.zoom - CONFIG.zoomStep));
+    btnFitPage && btnFitPage.addEventListener('click', () => {
+        fitToPage();
+        showToast('ปรับขนาดพอดีหน้าจอเรียบร้อย', 'info', 2000);
+    });
 
     // Ctrl + Scroll wheel zoom
     canvasContainer.addEventListener('wheel', (e) => {

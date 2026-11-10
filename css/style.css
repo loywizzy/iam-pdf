@@ -1447,45 +1447,46 @@ footer {
 }
 
 /* Center Stage Viewport */
-.editor-viewport {
-  flex: 1 1 0;
-  min-height: 0;
-  height: 100%;
-  background: #E2E8F0;
-  overflow: auto;
-  position: relative;
+/* Top Secondary Tools Ribbon Bar */
+.editor-ribbon-bar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 5.5rem 2rem 2rem 2rem;
+  justify-content: space-between;
+  padding: 0.45rem 1.25rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  z-index: 15;
 }
 
-/* Floating Toolbar */
-.floating-ribbon {
-  position: absolute;
-  top: 1rem;
-  z-index: 30;
+.ribbon-tools-section {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 0.4rem 0.6rem;
-  border-radius: var(--radius-full);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  max-width: 95%;
   flex-wrap: wrap;
-  justify-content: center;
+}
+
+.ribbon-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--gray-200);
+  margin: 0 0.5rem;
+}
+
+.ribbon-props-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .tool-btn {
   background: transparent;
   border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1503,36 +1504,14 @@ footer {
 .tool-btn.active {
   background: var(--primary-red);
   color: var(--white);
-  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
 }
 
 .tool-divider {
   width: 1px;
-  height: 24px;
+  height: 22px;
   background: var(--gray-200);
   margin: 0 0.25rem;
-}
-
-/* Properties Inspector Sub-bar */
-.properties-subbar {
-  position: absolute;
-  top: 4.5rem;
-  z-index: 25;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: var(--white);
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--gray-200);
-  font-size: 0.85rem;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .prop-group {
@@ -1549,8 +1528,8 @@ footer {
 }
 
 .color-dot {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: var(--radius-full);
   border: 2px solid var(--white);
   box-shadow: 0 0 0 1px var(--gray-300);
@@ -1574,6 +1553,20 @@ footer {
   font-size: 0.85rem;
   background: var(--white);
   color: var(--gray-800);
+}
+
+/* Center Stage Viewport */
+.editor-viewport {
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
+  background: #E2E8F0;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 /* Canvas Stage */
