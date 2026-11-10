@@ -29,3 +29,7 @@ build/
 .env
 .env.local
 .env.*.local
+
+# Local Documentation
+PROJECT_OVERVIEW.md
+
